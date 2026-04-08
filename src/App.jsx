@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import SwipeContainer from './components/SwipeContainer'
+import MenuDrawer from './components/MenuDrawer.jsx'
 import Home from './screens/Home'
 import ParkEvents from './screens/ParkEvents'
 import EventDetail from './screens/EventDetail'
@@ -19,7 +20,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [locationIds, setLocationIds] = useState(null)
 
-  // Resolve entity IDs once on mount
   useEffect(() => {
     getLocationIds().then(setLocationIds).catch(console.error)
   }, [])
@@ -39,7 +39,6 @@ export default function App() {
         onSwipeLeft={() => setScreenIndex(prev => Math.min(1, prev + 1))}
         onSwipeRight={() => setScreenIndex(prev => Math.max(0, prev - 1))}
       >
-        {/* Screen 1 — Home */}
         <div className="w-full flex-shrink-0 h-full">
           <Home
             onSelectLocation={handleSelectLocation}
@@ -47,7 +46,6 @@ export default function App() {
           />
         </div>
 
-        {/* Screen 2 — Park Events */}
         <div className="w-full flex-shrink-0 h-full">
           <ParkEvents
             locationId={locationId}
@@ -58,11 +56,12 @@ export default function App() {
         </div>
       </SwipeContainer>
 
-      {/* Screen 3 — Event Detail (slide-over) */}
+      {/* Screen 3 — Event Detail slide-over */}
       <div
-        className={`fixed inset-0 z-20 bg-white transition-transform duration-300 ${
+        className={`fixed inset-0 z-20 transition-transform duration-300 ${
           selectedShow ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ backgroundColor: 'var(--color-bg)' }}
       >
         {selectedShow && (
           <EventDetail
@@ -72,6 +71,12 @@ export default function App() {
           />
         )}
       </div>
+
+      {/* Menu drawer — above everything */}
+      <MenuDrawer
+        isOpen={menuOpen}
+        onClose={() => setMenuOpen(false)}
+      />
     </div>
   )
 }

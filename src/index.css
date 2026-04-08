@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+body {
+  background-color: var(--color-bg, #f5e6c8);
+  color: var(--color-text, #2c1a0e);
+  font-family: var(--font-body, 'Libre Baskerville', Georgia, serif);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading, 'Libre Baskerville', 'Book Antiqua', serif);
+}
