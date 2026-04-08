@@ -1,19 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SwipeContainer from './components/SwipeContainer'
 import Home from './screens/Home'
 import ParkEvents from './screens/ParkEvents'
 import EventDetail from './screens/EventDetail'
+import { getLocationIds } from './api/themeparks.js'
+
+const LOCATIONS = [
+  { key: 'disneylandPark', label: 'Disneyland' },
+  { key: 'dca',            label: 'DCA' },
+  { key: 'hotels',         label: 'Hotels' },
+  { key: 'downtownDisney', label: 'Downtown Disney' },
+]
 
 export default function App() {
   const [screenIndex, setScreenIndex] = useState(0)
   const [selectedLocation, setSelectedLocation] = useState('disneylandPark')
   const [selectedShow, setSelectedShow] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [locationIds, setLocationIds] = useState(null)
+
+  // Resolve entity IDs once on mount
+  useEffect(() => {
+    getLocationIds().then(setLocationIds).catch(console.error)
+  }, [])
 
   function handleSelectLocation(key) {
     setSelectedLocation(key)
     setScreenIndex(1)
   }
+
+  const locationId = locationIds?.[selectedLocation] ?? null
+  const locationName = LOCATIONS.find(l => l.key === selectedLocation)?.label ?? ''
 
   return (
     <div className="fixed inset-0 flex flex-col">
@@ -33,7 +50,8 @@ export default function App() {
         {/* Screen 2 — Park Events */}
         <div className="w-full flex-shrink-0 h-full">
           <ParkEvents
-            locationKey={selectedLocation}
+            locationId={locationId}
+            locationName={locationName}
             onSelectShow={setSelectedShow}
             onMenuOpen={() => setMenuOpen(true)}
           />
