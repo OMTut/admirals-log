@@ -28,7 +28,7 @@ export default function SwipeContainer({ children, currentIndex, onSwipeLeft, on
   }
 
   function evaluate(dx, dy) {
-    if (Math.abs(dx) <= Math.abs(dy) || Math.abs(dx) <= 40) return
+    if (Math.abs(dx) <= Math.abs(dy) * 1.5 || Math.abs(dx) <= 60) return
     if (dx < 0) onSwipeLeft?.()
     else onSwipeRight?.()
   }
