@@ -7,7 +7,7 @@ export default {
     '--color-primary':        '#2c1a0e',
     '--color-accent':         '#7a5c1e',
     '--color-text':           '#1a0e05',
-    '--color-text-secondary': '#5c3d1e',
+    '--color-text-secondary': '#A73200',
     '--color-border':         '#a0834e',
     '--font-heading':         "'Jim Nightshade', cursive",
     '--font-body':            "'Lato', sans-serif",

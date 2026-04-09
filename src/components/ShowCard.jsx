@@ -12,13 +12,13 @@ export default function ShowCard({ show, onSelect }) {
       style={{ backgroundColor: 'var(--color-surface)' }}
     >
       <span
-        className="block text-xs mb-1"
+        className="block text-s mb-1"
         style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-secondary)' }}
       >
         {formatTime(show.showtimes[0])}
       </span>
       <span
-        className="block text-xl leading-snug"
+        className="block text-3xl leading-snug"
         style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-text)' }}
       >
         {show.name}
