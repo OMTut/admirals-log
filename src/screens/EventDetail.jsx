@@ -57,7 +57,7 @@ export default function EventDetail({ show, onBack, onMenuOpen }) {
     <div
       ref={containerRef}
       className="flex flex-col h-full"
-      style={{ backgroundColor: 'var(--color-bg)' }}
+      style={{ backgroundImage: 'var(--bg-image)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'var(--color-bg)' }}
     >
       <Header onMenuOpen={onMenuOpen} />
 

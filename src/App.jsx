@@ -95,7 +95,15 @@ export default function App() {
   const locationName = LOCATIONS.find(l => l.key === selectedLocation)?.label ?? ''
 
   return (
-    <div className="fixed inset-0 flex flex-col">
+    <div
+      className="fixed inset-0 flex flex-col"
+      style={{
+        backgroundImage: 'var(--bg-image)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <SwipeContainer
         currentIndex={screenIndex}
         onSwipeLeft={() => setScreenIndex(prev => Math.min(1, prev + 1))}

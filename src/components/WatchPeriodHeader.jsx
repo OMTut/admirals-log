@@ -1,14 +1,13 @@
 export default function WatchPeriodHeader({ period }) {
   return (
-    <div
-      className="px-4 py-2 border-b text-xs font-bold uppercase tracking-widest sticky top-0"
-      style={{
-        backgroundColor: 'var(--color-surface)',
-        borderColor: 'var(--color-border)',
-        color: 'var(--color-text-secondary)',
-      }}
-    >
-      {period}
+    <div className="flex items-center gap-3 px-4 py-3">
+      <span
+        className="text-base whitespace-nowrap"
+        style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-text)' }}
+      >
+        {period}
+      </span>
+      <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-border)' }} />
     </div>
   )
 }
