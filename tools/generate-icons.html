@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admiral Boom Icon Generator</title>
+  <style>
+    body { font-family: sans-serif; background: #1a3a5c; color: #f5e6c8; padding: 2rem; }
+    h1 { color: #c8a84b; }
+    .previews { display: flex; gap: 2rem; align-items: flex-end; flex-wrap: wrap; margin: 2rem 0; }
+    .preview-block { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    canvas { border: 2px solid #c8a84b; }
+    button {
+      background: #c8a84b; color: #1a3a5c; border: none;
+      padding: 0.5rem 1.2rem; font-weight: bold; cursor: pointer;
+      border-radius: 4px; margin-top: 0.5rem;
+    }
+    button:hover { background: #f5e6c8; }
+    label { font-size: 0.9rem; color: #c8a84b; }
+  </style>
+</head>
+<body>
+  <h1>Admiral Boom Icon Generator</h1>
+  <p>Preview below. Click a download button to save the file, then place it in <code>public/icons/</code>.</p>
+
+  <div class="previews">
+    <div class="preview-block">
+      <label>512 × 512</label>
+      <canvas id="c512" width="512" height="512"></canvas>
+      <button onclick="download('c512','icon-512.png')">Download icon-512.png</button>
+    </div>
+    <div class="preview-block">
+      <label>192 × 192</label>
+      <canvas id="c192" width="192" height="192"></canvas>
+      <button onclick="download('c192','icon-192.png')">Download icon-192.png</button>
+    </div>
+    <div class="preview-block">
+      <label>Preview at ~48px (home screen size)</label>
+      <canvas id="c48" width="48" height="48"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const NAVY   = '#1a3a5c';
+    const GOLD   = '#c8a84b';
+    const PARCH  = '#f5e6c8';
+
+    function drawIcon(canvas) {
+      const s = canvas.width;
+      const cx = s / 2, cy = s / 2;
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      ctx.fillStyle = NAVY;
+      ctx.fillRect(0, 0, s, s);
+
+      // Outer ring
+      const outerR = s * 0.42;
+      const ringW  = s * 0.04;
+      ctx.strokeStyle = GOLD;
+      ctx.lineWidth = ringW;
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Wheel spokes (8)
+      const spokeOuter = outerR - ringW / 2;
+      const spokeInner = s * 0.18;
+      ctx.lineWidth = s * 0.035;
+      ctx.lineCap = 'round';
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI) / 4;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(angle) * spokeInner, cy + Math.sin(angle) * spokeInner);
+        ctx.lineTo(cx + Math.cos(angle) * spokeOuter, cy + Math.sin(angle) * spokeOuter);
+        ctx.strokeStyle = GOLD;
+        ctx.stroke();
+      }
+
+      // Hub
+      const hubR = s * 0.13;
+      ctx.beginPath();
+      ctx.arc(cx, cy, hubR, 0, Math.PI * 2);
+      ctx.fillStyle = GOLD;
+      ctx.fill();
+
+      // Hub center dot (navy)
+      ctx.beginPath();
+      ctx.arc(cx, cy, hubR * 0.45, 0, Math.PI * 2);
+      ctx.fillStyle = NAVY;
+      ctx.fill();
+
+      // Handle knobs on the outer ring (8 small circles)
+      const knobR = s * 0.032;
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI) / 4;
+        const kx = cx + Math.cos(angle) * outerR;
+        const ky = cy + Math.sin(angle) * outerR;
+        ctx.beginPath();
+        ctx.arc(kx, ky, knobR, 0, Math.PI * 2);
+        ctx.fillStyle = GOLD;
+        ctx.fill();
+      }
+    }
+
+    function download(canvasId, filename) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Draw all sizes
+    ['c512', 'c192', 'c48'].forEach(id => drawIcon(document.getElementById(id)));
+  </script>
+</body>
+</html>
