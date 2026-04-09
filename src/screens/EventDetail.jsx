@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import Header from '../components/Header.jsx'
 import ShowImage from '../components/ShowImage.jsx'
 
@@ -8,14 +9,62 @@ function formatTime(isoString) {
 }
 
 export default function EventDetail({ show, onBack, onMenuOpen }) {
+  const containerRef = useRef(null)
+  const touchStart = useRef(null)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    function onTouchStart(e) {
+      const t = e.touches[0]
+      touchStart.current = { x: t.clientX, y: t.clientY }
+    }
+
+    function onTouchMove(e) {
+      if (!touchStart.current) return
+      const dx = e.touches[0].clientX - touchStart.current.x
+      const dy = e.touches[0].clientY - touchStart.current.y
+      if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 10) {
+        e.preventDefault()
+      }
+    }
+
+    function onTouchEnd(e) {
+      if (!touchStart.current) return
+      const t = e.changedTouches[0]
+      const dx = t.clientX - touchStart.current.x
+      const dy = t.clientY - touchStart.current.y
+      touchStart.current = null
+      if (dx > 60 && dx > Math.abs(dy) * 1.5) onBack()
+    }
+
+    function onTouchCancel() { touchStart.current = null }
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', onTouchEnd, { passive: true })
+    el.addEventListener('touchcancel', onTouchCancel, { passive: true })
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', onTouchEnd)
+      el.removeEventListener('touchcancel', onTouchCancel)
+    }
+  }, [onBack])
+
   return (
-    <div className="flex flex-col h-full" style={{ backgroundColor: 'var(--color-bg)' }}>
+    <div
+      ref={containerRef}
+      className="flex flex-col h-full"
+      style={{ backgroundColor: 'var(--color-bg)' }}
+    >
       <Header onMenuOpen={onMenuOpen} />
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto overscroll-y-none" style={{ touchAction: 'pan-y' }}>
         <button
           onClick={onBack}
-          className="px-4 py-3 text-sm text-left w-full border-b"
+          className="px-4 py-3 text-sm text-left w-full border-b min-h-[44px] flex items-center"
           style={{ color: 'var(--color-primary)', borderColor: 'var(--color-border)' }}
         >
           ← Back

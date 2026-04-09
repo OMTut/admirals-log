@@ -19,17 +19,19 @@ export default function DateNav({ date, onDateChange }) {
       <button
         onClick={() => onDateChange(shiftDate(date, -1))}
         aria-label="Previous day"
-        className="p-3 text-lg leading-none text-gray-600"
+        className="p-3 text-lg leading-none min-h-[44px] min-w-[44px] flex items-center justify-center"
+        style={{ color: 'var(--color-text-secondary)' }}
       >
         ‹
       </button>
-      <span className="text-sm font-medium text-gray-700 min-w-[110px] text-center">
+      <span className="text-sm font-medium min-w-[110px] text-center" style={{ color: 'var(--color-text)' }}>
         {formatLabel(date)}
       </span>
       <button
         onClick={() => onDateChange(shiftDate(date, 1))}
         aria-label="Next day"
-        className="p-3 text-lg leading-none text-gray-600"
+        className="p-3 text-lg leading-none min-h-[44px] min-w-[44px] flex items-center justify-center"
+        style={{ color: 'var(--color-text-secondary)' }}
       >
         ›
       </button>

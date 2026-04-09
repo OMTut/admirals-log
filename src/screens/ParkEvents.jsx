@@ -50,7 +50,7 @@ export default function ParkEvents({ locationId, locationName, onSelectShow, onM
 
       <FilterChips activeCategory={activeCategory} onFilterChange={setActiveCategory} />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto overscroll-y-none" style={{ touchAction: 'pan-y' }}>
         {!locationId && (
           <p className="text-center p-8" style={{ color: 'var(--color-text-secondary)' }}>
             Schedule information for {locationName} is not currently available.
