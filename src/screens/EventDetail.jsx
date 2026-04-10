@@ -5,6 +5,7 @@ import ShowImage from '../components/ShowImage.jsx'
 function formatTime(isoString) {
   return new Date(isoString).toLocaleTimeString('en-US', {
     hour: 'numeric', minute: '2-digit', hour12: true,
+    timeZone: 'America/Los_Angeles',
   })
 }
 
@@ -57,7 +58,7 @@ export default function EventDetail({ show, onBack, onMenuOpen }) {
     <div
       ref={containerRef}
       className="flex flex-col h-full"
-      style={{ backgroundImage: 'var(--bg-image)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'var(--color-bg)' }}
+      style={{ backgroundColor: 'var(--color-bg)' }}
     >
       <Header onMenuOpen={onMenuOpen} />
 
@@ -76,9 +77,22 @@ export default function EventDetail({ show, onBack, onMenuOpen }) {
             <h2 className="text-xl font-bold leading-snug" style={{ color: 'var(--color-text)' }}>
               {show.name}
             </h2>
-            {show.location && (
+            <div className="flex items-center gap-3 mt-1 flex-wrap">
+              {show.location && (
+                <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                  {show.location}
+                </p>
+              )}
+              {show.duration && (
+                <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                  {show.location && <span style={{ marginRight: 12 }}>·</span>}
+                  Duration: {show.duration} min
+                </p>
+              )}
+            </div>
+            {show.preciseLocation && (
               <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-                {show.location}
+                {show.preciseLocation}
               </p>
             )}
             <p className="text-xs font-medium mt-1" style={{ color: 'var(--color-accent)' }}>
@@ -112,7 +126,7 @@ export default function EventDetail({ show, onBack, onMenuOpen }) {
 
           {/* Description (when API provides it) */}
           {show.description && (
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)', whiteSpace: 'pre-wrap' }}>
               {show.description}
             </p>
           )}

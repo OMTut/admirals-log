@@ -1,4 +1,5 @@
 import { getCategoryForShow } from '../data/filterMap.js'
+import showContent from '../data/showContent.js'
 
 const BASE_URL = 'https://api.themeparks.wiki/v1'
 
@@ -51,21 +52,26 @@ export async function getLiveShows(entityId) {
     .filter(e => e.entityType === 'SHOW' && e.showtimes?.length > 0)
     .map(raw => {
       const show = normalizeShow(raw)
-      show.category = getCategoryForShow(show)
+      const autoCategory = getCategoryForShow(show)
+      show.categories = show.categories ?? [autoCategory]
+      show.category = show.categories[0]
       return show
     })
 }
 
 function normalizeShow(raw) {
+  const content = showContent[raw.id] ?? {}
   return {
     id:          raw.id,
     name:        raw.name,
     entityType:  raw.entityType,
     status:      raw.status ?? 'UNKNOWN',
-    // land/location not provided by the live endpoint
-    location:    null,
-    // images not provided by the live endpoint
-    imageUrl:    null,
+    location:    content.location    ?? null,
+    imageUrl:    content.imageUrl    ?? null,
+    description: content.description ?? null,
+    duration:        content.duration        ?? null,
+    preciseLocation: content.preciseLocation ?? null,
+    categories:      content.categories      ?? null, // null = auto-detect below
     // showtimes as ISO strings sorted ascending
     showtimes:   (raw.showtimes ?? [])
       .map(s => s.startTime)

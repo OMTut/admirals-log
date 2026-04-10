@@ -97,12 +97,7 @@ export default function App() {
   return (
     <div
       className="fixed inset-0 flex flex-col"
-      style={{
-        backgroundImage: 'var(--bg-image)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-      }}
+      style={{ backgroundColor: 'var(--color-bg)' }}
     >
       <SwipeContainer
         currentIndex={screenIndex}
@@ -119,6 +114,7 @@ export default function App() {
         <div className="w-full flex-shrink-0 h-full">
           <ParkEvents
             locationId={locationId}
+            locationKey={selectedLocation}
             locationName={locationName}
             onSelectShow={setSelectedShow}
             onMenuOpen={() => setMenuOpen(true)}
@@ -152,14 +148,14 @@ export default function App() {
       {showInstallBanner && (
         <div
           className="fixed bottom-4 left-4 right-4 rounded-lg p-4 flex items-center justify-between shadow-lg z-30"
-          style={{ backgroundColor: 'var(--color-primary)', color: 'var(--color-bg)' }}
+          style={{ backgroundColor: 'var(--color-primary)', color: '#ffffff' }}
         >
           <p className="text-sm flex-1 mr-3">Add to your home screen for quick access at the park</p>
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleInstall}
               className="text-sm font-bold px-3 py-1 rounded"
-              style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)' }}
+              style={{ backgroundColor: 'var(--color-accent)', color: '#ffffff' }}
             >
               Install
             </button>

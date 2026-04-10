@@ -4,11 +4,12 @@
 
 export const FILTER_CATEGORIES = {
   ALL:        'All',
-  FIREWORKS:  'Fireworks & Nighttime',
+  FIREWORKS:  'Nighttime',
   SHOWS:      'Shows',
   ATMOSPHERE: 'Atmosphere Entertainment',
   PARADES:    'Parades',
   EVENTS:     'Events',
+  CHARACTERS: 'Characters',
 }
 
 // Keyword lists checked in priority order.

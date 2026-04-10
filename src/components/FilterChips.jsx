@@ -4,8 +4,9 @@ const CHIPS = Object.values(FILTER_CATEGORIES)
 
 export default function FilterChips({ activeCategory, onFilterChange }) {
   return (
-    <div className="flex gap-2 overflow-x-auto px-4 py-2 shrink-0 border-b"
-      style={{ backgroundColor: 'var(--color-bg)', borderColor: 'var(--color-border)' }}
+    <div
+      className="flex gap-2 overflow-x-auto px-4 py-3 shrink-0"
+      style={{ backgroundColor: 'var(--color-surface)', boxShadow: '0 1px 0 var(--color-border)' }}
     >
       {CHIPS.map(chip => {
         const isActive = activeCategory === chip
@@ -13,15 +14,15 @@ export default function FilterChips({ activeCategory, onFilterChange }) {
           <button
             key={chip}
             onClick={() => onFilterChange(chip)}
-            className="whitespace-nowrap px-3 py-2 rounded text-sm font-medium flex-shrink-0 border transition-colors"
+            className="whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium flex-shrink-0 transition-colors"
             style={isActive ? {
               backgroundColor: 'var(--color-primary)',
-              color: 'var(--color-bg)',
-              borderColor: 'var(--color-primary)',
+              color: '#ffffff',
+              border: '1.5px solid var(--color-primary)',
             } : {
-              backgroundColor: 'var(--color-surface)',
-              color: 'var(--color-text)',
-              borderColor: 'var(--color-border)',
+              backgroundColor: 'transparent',
+              color: 'var(--color-text-secondary)',
+              border: '1.5px solid var(--color-border)',
             }}
           >
             {chip}

@@ -29,8 +29,9 @@ export default function Home({ onSelectLocation, onMenuOpen }) {
               backgroundColor: 'var(--color-surface)',
               color: 'var(--color-text)',
               fontFamily: 'var(--font-heading)',
-              fontSize: '3.0rem',
+              fontSize: '2.0rem',
               lineHeight: '1',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04)',
             }}
           >
             {loc.label}

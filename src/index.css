@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
-body {
-  background-color: var(--color-bg, #f5e6c8);
-  color: var(--color-text, #2c1a0e);
-  font-family: var(--font-body, 'Libre Baskerville', Georgia, serif);
+:root {
+  --color-bg:             #F8FAFC;
+  --color-surface:        #FFFFFF;
+  --color-primary:        #1E293B;
+  --color-accent:         #3B82F6;
+  --color-text:           #0F172A;
+  --color-text-secondary: #64748B;
+  --color-border:         #E2E8F0;
+  --font-body:            'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading:         'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-heading, 'Libre Baskerville', 'Book Antiqua', serif);
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }

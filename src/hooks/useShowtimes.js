@@ -4,7 +4,8 @@ import { readCache, writeCache } from '../api/cache.js'
 
 const REFRESH_INTERVAL = 5 * 60 * 1000 // 5 minutes
 
-export function useShowtimes(locationId, date) {
+export function useShowtimes(locationId) {
+  const date = new Date().toISOString().split('T')[0]
   const [shows, setShows] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
