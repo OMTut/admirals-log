@@ -3,42 +3,50 @@ export const VIEW_MODES = {
   ALL: 'all',
 }
 
-const OPTIONS = [
-  { value: VIEW_MODES.UPCOMING, label: 'Upcoming Shows' },
-  { value: VIEW_MODES.ALL,      label: 'All Shows' },
-]
-
-export default function ViewToggle({ viewMode, onViewChange }) {
+export default function ViewToggle({ viewMode, onViewChange, onGoHome }) {
   return (
     <div
-      className="flex shrink-0 px-4 py-3"
-      style={{ backgroundColor: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
+      className="flex shrink-0"
+      style={{
+        backgroundColor: 'var(--color-surface)',
+        boxShadow: '0 -1px 4px rgba(0,0,0,0.08)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}
     >
-      <div
-        className="flex rounded-lg p-0.5 w-full"
-        style={{ backgroundColor: 'var(--color-bg)' }}
+      {[
+        { value: VIEW_MODES.UPCOMING, label: 'Upcoming' },
+        { value: VIEW_MODES.ALL,      label: 'All' },
+      ].map(opt => {
+        const isActive = viewMode === opt.value
+        return (
+          <button
+            key={opt.value}
+            onClick={() => onViewChange(opt.value)}
+            className="flex-1 py-3 text-sm font-medium transition-colors"
+            style={{
+              color: isActive ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+              borderTop: isActive
+                ? '2px solid var(--color-primary)'
+                : '2px solid transparent',
+            }}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
+
+      <button
+        onClick={onGoHome}
+        aria-label="Open menu"
+        className="flex items-center justify-center text-2xl transition-colors"
+        style={{
+          width: 64,
+          color: 'var(--color-text-secondary)',
+          borderTop: '2px solid transparent',
+        }}
       >
-        {OPTIONS.map(opt => {
-          const isActive = viewMode === opt.value
-          return (
-            <button
-              key={opt.value}
-              onClick={() => onViewChange(opt.value)}
-              className="flex-1 py-1.5 rounded-md text-sm font-medium transition-colors"
-              style={isActive ? {
-                backgroundColor: 'var(--color-surface)',
-                color: 'var(--color-text)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              } : {
-                backgroundColor: 'transparent',
-                color: 'var(--color-text-secondary)',
-              }}
-            >
-              {opt.label}
-            </button>
-          )
-        })}
-      </div>
+        ☰
+      </button>
     </div>
   )
 }

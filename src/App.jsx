@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import SwipeContainer from './components/SwipeContainer'
-import MenuDrawer from './components/MenuDrawer.jsx'
 import Home from './screens/Home'
 import ParkEvents from './screens/ParkEvents'
 import EventDetail from './screens/EventDetail'
@@ -53,7 +52,6 @@ export default function App() {
   const [screenIndex, setScreenIndex] = useState(0)
   const [selectedLocation, setSelectedLocation] = useState('disneylandPark')
   const [selectedShow, setSelectedShow] = useState(null)
-  const [menuOpen, setMenuOpen] = useState(false)
   const [locationIds, setLocationIds] = useState(loadCachedLocationIds)
   const [installPrompt, setInstallPrompt] = useState(null)
   const [showInstallBanner, setShowInstallBanner] = useState(false)
@@ -105,10 +103,7 @@ export default function App() {
         onSwipeRight={() => setScreenIndex(prev => Math.max(0, prev - 1))}
       >
         <div className="w-full flex-shrink-0 h-full">
-          <Home
-            onSelectLocation={handleSelectLocation}
-            onMenuOpen={() => setMenuOpen(true)}
-          />
+          <Home onSelectLocation={handleSelectLocation} />
         </div>
 
         <div className="w-full flex-shrink-0 h-full">
@@ -117,12 +112,12 @@ export default function App() {
             locationKey={selectedLocation}
             locationName={locationName}
             onSelectShow={setSelectedShow}
-            onMenuOpen={() => setMenuOpen(true)}
+            onGoHome={() => setScreenIndex(0)}
           />
         </div>
       </SwipeContainer>
 
-      {/* Screen 3 — Event Detail slide-over */}
+      {/* Event Detail slide-over */}
       <div
         className={`fixed inset-0 z-20 transition-transform duration-300 ${
           selectedShow ? 'translate-x-0' : 'translate-x-full'
@@ -133,16 +128,9 @@ export default function App() {
           <EventDetail
             show={selectedShow}
             onBack={() => setSelectedShow(null)}
-            onMenuOpen={() => setMenuOpen(true)}
           />
         )}
       </div>
-
-      {/* Menu drawer — above everything */}
-      <MenuDrawer
-        isOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
-      />
 
       {/* PWA install banner */}
       {showInstallBanner && (

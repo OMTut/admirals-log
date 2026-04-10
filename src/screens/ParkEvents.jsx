@@ -18,7 +18,7 @@ function getNextShowtime(show) {
   return show.showtimes.find(t => new Date(t).getTime() >= cutoff) ?? null
 }
 
-export default function ParkEvents({ locationId, locationKey, locationName, onSelectShow, onMenuOpen }) {
+export default function ParkEvents({ locationId, locationKey, locationName, onSelectShow, onGoHome }) {
   const [activeCategory, setActiveCategory] = useState(FILTER_CATEGORIES.ALL)
   const [viewMode, setViewMode] = useState(VIEW_MODES.UPCOMING)
 
@@ -39,19 +39,13 @@ export default function ParkEvents({ locationId, locationKey, locationName, onSe
   const displayShows = viewMode === VIEW_MODES.UPCOMING
     ? categoryFiltered
         .filter(hasUpcomingTime)
-        .sort((a, b) => {
-          const aNext = getNextShowtime(a)
-          const bNext = getNextShowtime(b)
-          return aNext.localeCompare(bNext)
-        })
+        .sort((a, b) => getNextShowtime(a).localeCompare(getNextShowtime(b)))
     : [...categoryFiltered].sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'var(--color-bg)' }}>
-      <Header onMenuOpen={onMenuOpen} title={locationName} />
+      <Header title={locationName} />
       <OfflineBanner isOffline={isOffline} lastFetched={lastFetched} />
-      <ViewToggle viewMode={viewMode} onViewChange={setViewMode} />
-      <FilterChips activeCategory={activeCategory} onFilterChange={setActiveCategory} />
 
       <main className="flex-1 overflow-y-auto overscroll-y-none px-4 py-3" style={{ touchAction: 'pan-y' }}>
         {!locationId && (
@@ -76,6 +70,9 @@ export default function ParkEvents({ locationId, locationKey, locationName, onSe
           <ShowCard key={show.id} show={show} onSelect={onSelectShow} />
         ))}
       </main>
+
+      <FilterChips activeCategory={activeCategory} onFilterChange={setActiveCategory} />
+      <ViewToggle viewMode={viewMode} onViewChange={setViewMode} onGoHome={onGoHome} />
     </div>
   )
 }

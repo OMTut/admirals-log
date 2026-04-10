@@ -53,7 +53,10 @@ export async function getLiveShows(entityId) {
     .map(raw => {
       const show = normalizeShow(raw)
       const autoCategory = getCategoryForShow(show)
-      show.categories = show.categories ?? [autoCategory]
+      const autoCategories = autoCategory === 'Events'
+        ? ['Shows', 'Characters']
+        : [autoCategory]
+      show.categories = show.categories ?? autoCategories
       show.category = show.categories[0]
       return show
     })

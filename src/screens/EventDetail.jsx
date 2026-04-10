@@ -9,7 +9,7 @@ function formatTime(isoString) {
   })
 }
 
-export default function EventDetail({ show, onBack, onMenuOpen }) {
+export default function EventDetail({ show, onBack }) {
   const containerRef = useRef(null)
   const touchStart = useRef(null)
 
@@ -60,7 +60,7 @@ export default function EventDetail({ show, onBack, onMenuOpen }) {
       className="flex flex-col h-full"
       style={{ backgroundColor: 'var(--color-bg)' }}
     >
-      <Header onMenuOpen={onMenuOpen} />
+      <Header />
 
       <div className="flex-1 overflow-y-auto overscroll-y-none" style={{ touchAction: 'pan-y' }}>
         <button

@@ -7,7 +7,7 @@ const LOCATIONS = [
   { key: 'downtownDisney', label: 'Downtown Disney', externalUrl: 'https://disneyland.disney.go.com/calendars/day/#/downtown-disney-district/' },
 ]
 
-export default function Home({ onSelectLocation, onMenuOpen }) {
+export default function Home({ onSelectLocation }) {
   function handleTap(loc) {
     if (loc.externalUrl) {
       window.open(loc.externalUrl, '_blank', 'noopener,noreferrer')
@@ -18,7 +18,7 @@ export default function Home({ onSelectLocation, onMenuOpen }) {
 
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'transparent' }}>
-      <Header onMenuOpen={onMenuOpen} />
+      <Header />
       <main className="flex flex-col gap-4 p-4 overflow-y-auto flex-1">
         {LOCATIONS.map(loc => (
           <button
