@@ -19,7 +19,7 @@ export default function Home({ onSelectLocation }) {
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'transparent' }}>
       <Header />
-      <main className="flex flex-col gap-4 p-4 overflow-y-auto flex-1">
+      <main className="flex flex-col gap-4 p-4 overflow-y-auto flex-1 justify-end">
         {LOCATIONS.map(loc => (
           <button
             key={loc.key}
