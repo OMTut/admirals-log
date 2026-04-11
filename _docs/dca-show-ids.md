@@ -1,6 +1,6 @@
 # Disney California Adventure — Show Entity IDs
 
-Reference for populating `src/data/showContent.js`.
+Reference for populating `src/data/showContentDCA.js`.
 Fetched from themeparks.wiki on 2026-04-10.
 
 | Show Name | Entity ID |

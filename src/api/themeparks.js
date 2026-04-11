@@ -1,5 +1,8 @@
 import { getCategoryForShow } from '../data/filterMap.js'
 import showContent from '../data/showContent.js'
+import showContentDCA from '../data/showContentDCA.js'
+
+const allShowContent = { ...showContent, ...showContentDCA }
 
 const BASE_URL = 'https://api.themeparks.wiki/v1'
 
@@ -49,7 +52,7 @@ export async function getLiveShows(entityId) {
   const { liveData } = await res.json()
 
   return liveData
-    .filter(e => e.entityType === 'SHOW' && e.showtimes?.length > 0)
+    .filter(e => e.entityType === 'SHOW' && e.showtimes?.length > 0 && !allShowContent[e.id]?.poi)
     .map(raw => {
       const show = normalizeShow(raw)
       const autoCategory = getCategoryForShow(show)
@@ -63,7 +66,7 @@ export async function getLiveShows(entityId) {
 }
 
 function normalizeShow(raw) {
-  const content = showContent[raw.id] ?? {}
+  const content = allShowContent[raw.id] ?? {}
   return {
     id:          raw.id,
     name:        raw.name,

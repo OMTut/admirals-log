@@ -21,7 +21,7 @@ export default function Header({ onMenuOpen, title }) {
 
       {title && (
         <span
-          className="flex-1 text-center text-base font-semibold"
+          className="flex-1 text-center text-xl font-semibold"
           style={{ color: 'var(--color-text)' }}
         >
           {title}

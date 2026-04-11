@@ -6,7 +6,11 @@ import ViewToggle, { VIEW_MODES } from '../components/ViewToggle.jsx'
 import ShowCard from '../components/ShowCard.jsx'
 import { useShowtimes } from '../hooks/useShowtimes.js'
 import { useCharacters } from '../hooks/useCharacters.js'
+import { useDowntownDisney } from '../hooks/useDowntownDisney.js'
+import { useHotels } from '../hooks/useHotels.js'
 import { FILTER_CATEGORIES } from '../data/filterMap.js'
+
+const HOTEL_CHIPS = ['Shows', 'Events']
 
 function hasUpcomingTime(show) {
   const cutoff = Date.now() - 10 * 60 * 1000
@@ -24,13 +28,19 @@ export default function ParkEvents({ locationId, locationKey, locationName, onSe
 
   const { shows, loading: showsLoading, error: showsError, isOffline, lastFetched } = useShowtimes(locationId)
   const { characters, loading: charsLoading } = useCharacters(locationKey)
+  const { shows: ddShows, loading: ddLoading, error: ddError } = useDowntownDisney(locationKey)
+  const { shows: hotelShows } = useHotels(locationKey)
 
   useEffect(() => {
     setActiveCategory(FILTER_CATEGORIES.ALL)
-  }, [locationId])
+  }, [locationKey])
 
-  const allItems = [...shows, ...characters]
-  const loading = showsLoading || charsLoading
+  const isDD = locationKey === 'downtownDisney'
+  const isHotels = locationKey === 'hotels'
+  const hasSource = locationId !== null || isDD || isHotels
+  const allItems = isDD ? ddShows : isHotels ? hotelShows : [...shows, ...characters]
+  const loading = isDD ? ddLoading : isHotels ? false : (showsLoading || charsLoading)
+  const error = isDD ? ddError : isHotels ? null : showsError
 
   const categoryFiltered = activeCategory === FILTER_CATEGORIES.ALL
     ? allItems
@@ -45,33 +55,39 @@ export default function ParkEvents({ locationId, locationKey, locationName, onSe
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'var(--color-bg)' }}>
       <Header title={locationName} />
-      <OfflineBanner isOffline={isOffline} lastFetched={lastFetched} />
+      {!isDD && <OfflineBanner isOffline={isOffline} lastFetched={lastFetched} />}
 
       <main className="flex-1 overflow-y-auto overscroll-y-none px-4 py-3" style={{ touchAction: 'pan-y' }}>
-        {!locationId && (
+        {!hasSource && (
           <p className="text-center p-8" style={{ color: 'var(--color-text-secondary)' }}>
             Schedule information for {locationName} is not currently available.
           </p>
         )}
-        {locationId && loading && (
+        {hasSource && loading && (
           <p className="text-center p-8" style={{ color: 'var(--color-text-secondary)' }}>
             Loading schedule...
           </p>
         )}
-        {locationId && !loading && showsError && (
-          <p className="text-center p-8 text-red-400">{showsError}</p>
+        {hasSource && !loading && error && (
+          <p className="text-center p-8 text-red-400">{error}</p>
         )}
-        {locationId && !loading && !showsError && displayShows.length === 0 && (
+        {hasSource && !loading && !error && displayShows.length === 0 && (
           <p className="text-center p-8" style={{ color: 'var(--color-text-secondary)' }}>
             {viewMode === VIEW_MODES.UPCOMING ? 'No upcoming shows.' : 'No shows found.'}
           </p>
         )}
-        {locationId && !loading && displayShows.map(show => (
+        {hasSource && !loading && displayShows.map(show => (
           <ShowCard key={show.id} show={show} onSelect={onSelectShow} />
         ))}
       </main>
 
-      <FilterChips activeCategory={activeCategory} onFilterChange={setActiveCategory} />
+      {!isDD && (
+        <FilterChips
+          activeCategory={activeCategory}
+          onFilterChange={setActiveCategory}
+          chips={isHotels ? HOTEL_CHIPS : undefined}
+        />
+      )}
       <ViewToggle viewMode={viewMode} onViewChange={setViewMode} onGoHome={onGoHome} />
     </div>
   )

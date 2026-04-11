@@ -8,7 +8,7 @@ import { writeCache } from './api/cache.js'
 
 const LOCATIONS = [
   { key: 'disneylandPark', label: 'Disneyland' },
-  { key: 'dca',            label: 'DCA' },
+  { key: 'dca',            label: 'Disney California Adventure' },
   { key: 'hotels',         label: 'Hotels' },
   { key: 'downtownDisney', label: 'Downtown Disney' },
 ]

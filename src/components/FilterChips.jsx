@@ -1,6 +1,6 @@
 import { FILTER_CATEGORIES, FILTER_CHIPS } from '../data/filterMap.js'
 
-export default function FilterChips({ activeCategory, onFilterChange }) {
+export default function FilterChips({ activeCategory, onFilterChange, chips = FILTER_CHIPS }) {
   return (
     <div
       className="flex gap-2 overflow-x-auto px-4 py-2 shrink-0"
@@ -9,7 +9,7 @@ export default function FilterChips({ activeCategory, onFilterChange }) {
         borderTop: '1px solid var(--color-border)',
       }}
     >
-      {FILTER_CHIPS.map(chip => {
+      {chips.map(chip => {
         const isActive = activeCategory === chip
         return (
           <button

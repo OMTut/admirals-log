@@ -3,8 +3,8 @@ import Header from '../components/Header.jsx'
 const LOCATIONS = [
   { key: 'disneylandPark', label: 'Disneyland' },
   { key: 'dca',            label: 'Disney California Adventure' },
-  { key: 'hotels',         label: 'Hotels',          externalUrl: 'https://disneyland.disney.go.com/calendars/day/#/hotels-disneyland-resort/' },
-  { key: 'downtownDisney', label: 'Downtown Disney', externalUrl: 'https://disneyland.disney.go.com/calendars/day/#/downtown-disney-district/' },
+  { key: 'hotels',         label: 'Hotels' },
+  { key: 'downtownDisney', label: 'Downtown Disney' },
 ]
 
 export default function Home({ onSelectLocation }) {
@@ -18,8 +18,11 @@ export default function Home({ onSelectLocation }) {
 
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'transparent' }}>
-      <Header />
+      <Header title="Going to Disneyland!!"/>
       <main className="flex flex-col gap-4 p-4 overflow-y-auto flex-1 justify-end">
+        <div className="flex justify-center mb-2">
+          <img src="/disney70-1.jpg" alt="Disneyland 70th" className="max-w-s w-full rounded-lg" />
+        </div>
         {LOCATIONS.map(loc => (
           <button
             key={loc.key}
