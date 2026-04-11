@@ -19,7 +19,7 @@ export default function Home({ onSelectLocation }) {
   return (
     <div className="flex flex-col h-full" style={{ backgroundColor: 'transparent' }}>
       <Header title="Going to Disneyland!!"/>
-      <main className="flex flex-col gap-4 p-4 overflow-y-auto flex-1 justify-end">
+      <main className="flex flex-col gap-4 p-4 pb-12 overflow-y-auto flex-1 justify-end">
         <div className="flex justify-center mb-2">
           <img src="/disney70-1.jpg" alt="Disneyland 70th" className="max-w-s w-full rounded-lg" />
         </div>

@@ -10,7 +10,7 @@ export default function ViewToggle({ viewMode, onViewChange, onGoHome }) {
       style={{
         backgroundColor: 'var(--color-surface)',
         boxShadow: '0 -1px 4px rgba(0,0,0,0.08)',
-        paddingBottom: 'env(safe-area-inset-bottom)',
+        paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)',
       }}
     >
       {[
@@ -41,6 +41,7 @@ export default function ViewToggle({ viewMode, onViewChange, onGoHome }) {
         className="flex items-center justify-center text-2xl transition-colors"
         style={{
           width: 64,
+          paddingRight: 36,
           color: 'var(--color-text-secondary)',
           borderTop: '2px solid transparent',
         }}
